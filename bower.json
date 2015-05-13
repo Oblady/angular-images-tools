@@ -1,0 +1,25 @@
+{
+  "name": "angular-images-tools",
+  "main": "angular-images-tools.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/gorghoa/angular-images-tools",
+  "authors": [
+    "Rodrigue Villetard <rodrigue@oblady.fr>"
+  ],
+  "description": "A set of image tools",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "angular",
+    "images"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
