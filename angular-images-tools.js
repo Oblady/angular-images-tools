@@ -1,4 +1,4 @@
-angular.module('angular-images-tools', []).service('imageTools', [function() {
+angular.module('angular-images-tools', []).service('imageTools', ['$q', function($q) {
     "use strict";
 
     return {
@@ -9,14 +9,16 @@ angular.module('angular-images-tools', []).service('imageTools', [function() {
          * @param float angle in radian ie: 90° => Math.PI/2
          * @param callback cb(DOMImage);
          */
-        rotate: function(img, angle cb) {
+        rotate: function(img, angle) {
+
+            var def = $q.defer();
 
             var resultImg = new Image();
 
             img.onload = function() {
 
-                x = img.width;
-                y = img.height;
+                var x = img.width;
+                var y = img.height;
 
                 var canvas = document.createElement('canvas');
                 canvas.width = y;
@@ -32,8 +34,49 @@ angular.module('angular-images-tools', []).service('imageTools', [function() {
 
                 resultImg.src = canvas.toDataURL();
 
-                cb(resultImg);
+                def.resolve(resultImg);
             };
+    
+            return def.promise;
+        },
+
+        fitImage: function(img, width, height) {
+            var def = $q.defer();
+
+            
+            var resultImg = new Image();
+
+            img.onload = function() {
+
+                var canvas = document.createElement('canvas');
+
+                canvas.width = width;
+                canvas.height = height;
+
+                var ctx = canvas.getContext('2d');
+
+                var max = (img.width>img.height)?'width':'height';
+
+                var ratio;
+                ctx.save();
+                if(max=='width') {
+                    ratio=width/img.width;
+                    ctx.translate(0, height/2);
+                    ctx.drawImage(img, 0, -img.height*ratio/2, img.width*ratio, img.height*ratio);
+                } else {
+                    ratio=height/img.height;
+                    ctx.translate(width/2, 0);
+                    ctx.drawImage(img, -img.width*ratio/2, 0, img.width*ratio, img.height*ratio);
+                }
+                
+                ctx.restore();
+
+                resultImg.src=canvas.toDataURL();
+                def.resolve(resultImg);
+            };
+            
+
+            return def.promise;
         }
 
 
