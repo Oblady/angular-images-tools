@@ -15,6 +15,10 @@ angular.module('angular-images-tools', []).service('imageTools', ['$q', function
 
             var resultImg = new Image();
 
+            img.onerror = function(e) {
+                def.reject(e);
+            };
+
             img.onload = function() {
 
                 var x = img.width;
