@@ -44,8 +44,9 @@ angular.module('angular-images-tools', []).service('imageTools', ['$q', function
             return def.promise;
         },
 
-        fitImage: function(img, width, height) {
+        fitImage: function(img, width, height, background) {
             var def = $q.defer();
+
 
             
             var resultImg = new Image();
@@ -62,6 +63,11 @@ angular.module('angular-images-tools', []).service('imageTools', ['$q', function
                 canvas.height = height;
 
                 var ctx = canvas.getContext('2d');
+
+                if(background) {
+                    ctx.fillStyle=background;
+                    ctx.fillRect(0,0,canvas.width, canvas.height);
+                }
 
                 var max = (img.width>img.height)?'width':'height';
 
