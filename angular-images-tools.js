@@ -4,7 +4,7 @@ angular.module('angular-images-tools', []).service('imageTools', ['$q', function
     return {
         onloadImage: function(url) {
             return $q(function(resolve, reject) {
-                var resultImg = new Image();
+                var img = new Image();
 
                 img.onerror = function(e) {
                     reject(e);
