@@ -2,10 +2,8 @@ angular.module('angular-images-tools', []).service('imageTools', ['$q', function
     "use strict";
 
     return {
-        onloadImage: function(url) {
+        onloadImage: function(img) {
             return $q(function(resolve, reject) {
-                var img = new Image();
-
                 img.onerror = function(e) {
                     reject(e);
                 };
@@ -17,7 +15,10 @@ angular.module('angular-images-tools', []).service('imageTools', ['$q', function
         },
 
         toCanvas: function(url) {
-            return this.onloadImage().then(function(img) {
+
+            var img = new Image();
+            img.src=url;
+            return this.onloadImage(img).then(function(img) {
                 return $q(function(resolve, reject) {
 
                     var x = img.width;
